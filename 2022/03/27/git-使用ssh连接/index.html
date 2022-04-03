@@ -6,7 +6,7 @@
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0">
   
-  <title>git 使用ssh连接 | 🚀AutismPatient</title>
+  <title>git 使用ssh连接 (windows) | 🚀AutismPatient</title>
   <meta name="author" content="AutismPatient">
   
   <meta name="description" content="这是zeyun的个人博客，用于记录生活工作的任何事物！">
@@ -14,7 +14,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="git 使用ssh连接"/>
+  <meta property="og:title" content="git 使用ssh连接 (windows)"/>
   <meta property="og:site_name" content="🚀AutismPatient"/>
 
   
@@ -118,7 +118,7 @@ var _hmt = _hmt || [];
 
 	
 		<div class="page-header">
-			<h1> git 使用ssh连接</h1>
+			<h1> git 使用ssh连接 (windows)</h1>
 		</div>
 	
 
@@ -136,7 +136,89 @@ var _hmt = _hmt || [];
 	  		
 
 	  <p>Using the SSH protocol, you can connect and authenticate to remote servers and services. With SSH keys, you can connect to GitHub without supplying your username and personal access token at each visit.</p>
-<h3 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h3>	  
+<span id="more"></span>
+
+<h2 id="检查现有的-SSH-密钥"><a href="#检查现有的-SSH-密钥" class="headerlink" title="检查现有的 SSH 密钥"></a>检查现有的 SSH 密钥</h2><p>在生成 SSH 密钥之前，您可以检查是否有任何现有的 SSH 密钥。</p>
+<ol>
+<li>打开 Git Bash。</li>
+<li>输入ls -al ~&#x2F;.ssh以查看是否存在现有的 SSH 密钥。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls -al ~/.ssh</span><br><span class="line"># Lists the files in your .ssh directory, if they exist</span><br></pre></td></tr></table></figure></li>
+<li>检查目录列表以查看您是否已经拥有公共 SSH 密钥。默认情况下，GitHub 支持的公钥的文件名是以下之一</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id_rsa.pub</span><br><span class="line">id_ecdsa.pub</span><br><span class="line">id_ed25519.pub</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>生成新的 SSH 密钥或上传现有密钥。<ul>
+<li>如果您没有受支持的公钥和私钥对，或者不想使用任何可用的密钥对，请生成新的 SSH 密钥</li>
+<li>如果您看到列出的现有公钥和私钥对（例如，id_rsa.pub和id_rsa）您想用来连接到 GitHub，您可以将密钥添加到 ssh-agent。</li>
+</ul>
+</li>
+</ol>
+<h2 id="生成新的-SSH-密钥并将其添加到-ssh-agent"><a href="#生成新的-SSH-密钥并将其添加到-ssh-agent" class="headerlink" title="生成新的 SSH 密钥并将其添加到 ssh-agent"></a>生成新的 SSH 密钥并将其添加到 ssh-agent</h2><p>检查现有 SSH 密钥后，您可以生成新的 SSH 密钥以用于身份验证，然后将其添加到 ssh-agent</p>
+<h3 id="关于-SSH-密钥生成"><a href="#关于-SSH-密钥生成" class="headerlink" title="关于 SSH 密钥生成"></a>关于 SSH 密钥生成</h3><p>如果您还没有 SSH 密钥，则必须生成新的 SSH 密钥以用于身份验证。如果您不确定是否已有 SSH 密钥，可以检查现有密钥。,</p>
+<p>如果您想使用硬件安全密钥向 GitHub 进行身份验证，则必须为您的硬件安全密钥生成一个新的 SSH 密钥。当您使用密钥对进行身份验证时，您必须将硬件安全密钥连接到您的计算机。有关详细信息，请参阅OpenSSH 8.2 发行说明,</p>
+<p>如果您不想在每次使用 SSH 密钥时都重新输入您的密码，您可以将您的密钥添加到 SSH 代理，该代理会管理您的 SSH 密钥并记住您的密码。</p>
+<h3 id="生成新的-SSH-密钥"><a href="#生成新的-SSH-密钥" class="headerlink" title="生成新的 SSH 密钥"></a>生成新的 SSH 密钥</h3><ol>
+<li><p>打开 Git Bash。</p>
+</li>
+<li><p>粘贴下面的文本，替换为您的 GitHub 电子邮件地址</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t ed25519 -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure>
+<p>这将使用提供的电子邮件作为标签创建一个新的 SSH 密钥。</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Generating public/private algorithm key pair.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当系统提示您“输入要在其中保存密钥的文件”时，按 Enter。这接受默认文件位置。</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; Enter a file in which to save the key (/c/Users/you/.ssh/id_algorithm):[Press enter]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在提示符处，键入安全密码。有关更多信息，请参阅 <a target="_blank" rel="noopener" href="https://docs.github.com/cn/articles/working-with-ssh-key-passphrases">使用 SSH 密钥密码短语</a></p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; Enter passphrase (empty for no passphrase): [Type a passphrase]</span><br><span class="line">&gt; Enter same passphrase again: [Type passphrase again]</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="将-SSH-密钥添加到-ssh-agent"><a href="#将-SSH-密钥添加到-ssh-agent" class="headerlink" title="将 SSH 密钥添加到 ssh-agent"></a>将 SSH 密钥添加到 ssh-agent</h3><p>在向 ssh-agent 添加新的 SSH 密钥以管理您的密钥之前，您应该检查现有的 SSH 密钥并生成一个新的 SSH 密钥。</p>
+<p>如果已安装 <a target="_blank" rel="noopener" href="https://desktop.github.com/">GitHub Desktop</a>，可使用它克隆仓库，而无需处理 SSH 密钥。</p>
+<ol>
+<li>确保 ssh-agent 正在运行。您可以使用“使用 SSH 密钥密码”中的“自动启动 ssh-agent”说明，或手动启动它： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># start the ssh-agent in the background</span><br><span class="line">$ eval &quot;$(ssh-agent -s)&quot;</span><br><span class="line">&gt; Agent pid 59566</span><br></pre></td></tr></table></figure></li>
+<li>Add your SSH private key to the ssh-agent. 如果您创建了不同名称的密钥，或者您要添加不同名称的现有密钥，请将命令中的 id_ed25519 替换为您的私钥文件的名称 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-add ~/.ssh/id_ed25519</span><br></pre></td></tr></table></figure></li>
+<li>将 SSH 密钥添加到您在 GitHub 上的帐户。更多信息请参阅 “<a target="_blank" rel="noopener" href="https://docs.github.com/cn/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account">将新的 SSH 密钥添加到您的 GitHub 帐户</a>“</li>
+</ol>
+<h2 id="新增-SSH-密钥到-GitHub-帐户"><a href="#新增-SSH-密钥到-GitHub-帐户" class="headerlink" title="新增 SSH 密钥到 GitHub 帐户"></a>新增 SSH 密钥到 GitHub 帐户</h2><p>要在 GitHub.com 上配置帐户以使用新的（或现有的）SSH 密钥，还需要将密钥添加到帐户。</p>
+<p>在将新的 SSH 密钥添加到 GitHub.com 上的帐户之前，您应该具有：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.github.com/cn/articles/checking-for-existing-ssh-keys">检查现有 SSH 密钥</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.github.com/cn/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">生成新 SSH 密钥并添加到 ssh-agent</a></li>
+</ul>
+<p>在向您在 GitHub.com 上的帐户添加新 SSH 密钥后，您可以重新配置任何本地存储库以使用 SSH。 更多信息请参阅 <a target="_blank" rel="noopener" href="https://docs.github.com/cn/github/getting-started-with-github/managing-remote-repositories/#switching-remote-urls-from-https-to-ssh">“将远程 URL 从 HTTPS 转换为 SSH”</a></p>
+<ol>
+<li><p>将 SSH 公钥复制到剪贴板。</p>
+<p> 如果您的 SSH 公钥文件与示例代码不同，请修改文件名以匹配您当前的设置。 在复制密钥时，请勿添加任何新行或空格。</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ clip &lt; ~/.ssh/id_ed25519.pub</span><br><span class="line"># Copies the contents of the id_ed25519.pub file to your clipboard</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在任何页面的右上角，单击您的个人资料照片，然后单击 Settings（设置）</p>
+<p> <img src="https://docs.github.com/assets/cb-34573/images/help/settings/userbar-account-settings.png" alt="setting"></p>
+</li>
+<li><p>在侧边栏的“访问”部分，单击SSH 和 GPG 密钥。</p>
+</li>
+<li><p>单击 New SSH key（新 SSH 密钥）或 Add SSH key（添加 SSH 密钥）。<br> <img src="https://docs.github.com/assets/cb-11964/images/help/settings/ssh-add-ssh-key.png" alt="new ssh key"></p>
+</li>
+<li><p>在 “Title”（标题）字段中，为新密钥添加描述性标签。 例如，如果您使用的是个人 Mac，此密钥名称可能是 “Personal MacBook Air”。</p>
+</li>
+<li><p>将密钥粘贴到 “Key”（密钥）字段。<br> <img src="https://docs.github.com/assets/cb-24796/images/help/settings/ssh-key-paste.png" alt="key"></p>
+</li>
+<li><p>单击 Add SSH key（添加 SSH 密钥）<br> <img src="https://docs.github.com/assets/cb-2803/images/help/settings/ssh-add-key.png" alt="add"></p>
+</li>
+<li><p>如有提示，请确认您的 GitHub 密码。<br> <img src="https://docs.github.com/assets/cb-14481/images/help/settings/sudo_mode_popup.png" alt="password"></p>
+</li>
+</ol>
+<h2 id="测试-SSH-连接"><a href="#测试-SSH-连接" class="headerlink" title="测试 SSH 连接"></a>测试 SSH 连接</h2><p>设置 SSH 密钥并将其添加到您在 GitHub.com 上的帐户后，您可以测试连接</p>
+<ol>
+<li><p>打开 Git Bash。</p>
+</li>
+<li><p>输入以下内容 </p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line"># Attempts to ssh to GitHub</span><br></pre></td></tr></table></figure>
+<p> 您可能会看到类似如下的警告：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; The authenticity of host &#x27;github.com (IP ADDRESS)&#x27; can&#x27;t be established.</span><br><span class="line">&gt; RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.</span><br><span class="line">&gt; Are you sure you want to continue connecting (yes/no)?</span><br></pre></td></tr></table></figure></li>
+<li><p>验证所看到消息中的指纹是否匹配 <a target="_blank" rel="noopener" href="https://docs.github.com/cn/github/authenticating-to-github/githubs-ssh-key-fingerprints">GitHub 的公钥指纹</a> 。 如果是，则输入 <code>yes</code>：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; Hi username! You&#x27;ve successfully authenticated, but GitHub does not</span><br><span class="line">&gt; provide shell access.</span><br></pre></td></tr></table></figure></li>
+<li><p>验证生成的消息包含您的用户名。 如果收到“权限被拒绝”消息，请参阅 <a target="_blank" rel="noopener" href="https://docs.github.com/cn/articles/error-permission-denied-publickey">错误：权限被拒绝（公钥）</a></p>
+</li>
+</ol>
+<h2 id="来自-github文档"><a href="#来自-github文档" class="headerlink" title="来自 github文档"></a>来自 <a target="_blank" rel="noopener" href="https://docs.github.com/cn/authentication/connecting-to-github-with-ssh/about-ssh">github文档</a></h2>	  
 	</div>
 
 	<div>
